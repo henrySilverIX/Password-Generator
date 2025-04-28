@@ -6,12 +6,13 @@ Além disso, o programa pode gerar senhas aleatórias e seguras para você!
 # Funcionalidades 🚀
 <ul>
 <li>Armazena:</li>
+<ul>
 <li>Website (ou serviço)</li>
 <li>E-mail/Usuário</li>
 <li>Senha</li>
+</ul>
 
 <li>Gera senhas aleatórias e seguras (com letras maiúsculas, minúsculas, números e símbolos)</li>
-
 <li>Copia a senha gerada automaticamente para a área de transferência</li>
 <li>Armazena todas as informações em um arquivo de texto (passwords.txt) para consultas futuras</li>
 <li>Interface gráfica amigável (Tkinter)</li>
@@ -20,11 +21,12 @@ Além disso, o programa pode gerar senhas aleatórias e seguras para você!
 
 # Como Usar 📋
 1. Executável
-Baixe o arquivo .exe.
 
-Execute o programa clicando duas vezes nele.
-
-Comece a armazenar e gerar senhas rapidamente!
+<ul>
+<li>Baixe o arquivo .exe.</li>
+<li>Execute o programa clicando duas vezes nele.</li>
+<li>Comece a armazenar e gerar senhas rapidamente!</li>
+</ul>
 
 2. Código Fonte (Python)
 Caso queira rodar o código manualmente:
@@ -49,4 +51,4 @@ python nome_do_arquivo.py
 <li>Tkinter — Interface Gráfica</li>
 <li>Pyperclip — Copiar texto para área de transferência</li>
 <li>PyInstaller — Para gerar o executável (.exe)</li>
-</ul>>
+</ul>
