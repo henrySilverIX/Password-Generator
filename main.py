@@ -4,7 +4,8 @@ from tkinter import messagebox
 import random
 import pyperclip
 from assets.tooltip import Tooltip
-
+import sys
+import os
 
 # Password Generator
 def generate_password():
@@ -58,28 +59,50 @@ def save_password():
     if len(site) != 0 and len(senha) != 0:
         is_ok = messagebox.askokcancel(title=site,
                                        message=f"These are the entries you've typed:\nEmail: {email}\nSenha: {senha}\nIs it ok to save?")
+
         if is_ok:
-            with open("database/passwords.txt", mode="a") as senhas:
+            # Criar a pasta 'database' no mesmo local do executável, se não existir
+            output_dir = os.path.join(os.path.dirname(sys.executable), 'database') if getattr(sys, 'frozen', False) else 'resources/database'
+            os.makedirs(output_dir, exist_ok=True)
+
+            caminho_senhas = os.path.join(output_dir, 'passwords.txt')
+
+            with open(caminho_senhas, mode="a") as senhas:
                 senhas.write(f"{site} | {email} | {senha}\n")
                 website_entry.delete(0, END)
                 password_entry.delete(0, END)
-            with open("database/passwords.txt") as senhas:
-                consulta = senhas.read()
-                print(consulta)
     else:
         messagebox.showerror(title="Error", message="Empty Fields")
 
 # UI Setup
-caminho_icone = 'lock.ico'
+# Solução para encontrar o .ico tanto no .py quanto no .exe
+if getattr(sys, 'frozen', False):
+    # Estamos rodando no executável
+    caminho_icone = os.path.join(sys._MEIPASS, 'lock.ico')
+else:
+    # Estamos rodando no script Python
+    caminho_icone = 'lock.ico'
+
+# Função para encontrar arquivos corretamente
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if getattr(sys, 'frozen', False):
+        # Executável
+        return os.path.join(sys._MEIPASS, relative_path)
+    else:
+        # Script normal
+        return os.path.join(os.path.abspath("."), relative_path)
+
+
 
 window = Tk()
 window.title("Password Manager")
 window.config(padx=50, pady=50)
-window.iconbitmap(caminho_icone)
+window.iconbitmap(resource_path(caminho_icone))
 
 
 canvas = Canvas(width=200, height=200)
-lock_img = PhotoImage(file="logo.png")
+lock_img = PhotoImage(file=resource_path("resources/images/logo.png"))
 canvas.create_image(50,100, image=lock_img)
 canvas.grid(row=0, column=1)
 
@@ -105,7 +128,7 @@ email_entry.grid(row=2, column=1, columnspan=2)
 email_entry.insert(0,"")
 
 # Frame para agrupar password_entry + generate_password_button
-icone_copiar = tkinter.PhotoImage(file="copy-icon.png")
+icone_copiar = tkinter.PhotoImage(file=resource_path("resources/images/copy-icon.png"))
 
 password_frame = Frame(window)
 password_frame.grid(row=3, column=1, columnspan=2, pady=5)
